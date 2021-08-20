@@ -346,307 +346,6 @@ function svgMapWrapper(svgPanZoom) {
     ZW: 'Zimbabwe'
   };
 
-  // Apply the data to the map
-
-  svgMap.prototype.applyData = function (data) {
-    var max = null;
-    var min = null;
-
-    // Get highest and lowest value
-    Object.keys(data.values).forEach(function (countryID) {
-      var value = parseInt(data.values[countryID][data.applyData], 10);
-      max === null && (max = value);
-      min === null && (min = value);
-      value > max && (max = value);
-      value < min && (min = value);
-    });
-
-    data.data[data.applyData].thresholdMax &&
-      (max = Math.min(max, data.data[data.applyData].thresholdMax));
-    data.data[data.applyData].thresholdMin &&
-      (min = Math.max(min, data.data[data.applyData].thresholdMin));
-
-    // Loop through countries and set colors
-    // Object.keys(this.countries).forEach(
-    //   function (countryID) {
-    //     var element = document.getElementById(
-    //       this.id + '-map-country-' + countryID
-    //     );
-    //     if (!element) {
-    //       return;
-    //     }
-    //     if (!data.values[countryID]) {
-    //       element.setAttribute('fill', this.options.colorNoData);
-    //       return;
-    //     }
-    //     if (typeof(data.values[countryID][this.options.manualColorAttribute]) != "undefined") {
-    //       element.setAttribute('fill', data.values[countryID][this.options.manualColorAttribute]);
-    //       return;
-    //     }
-    //     var value = Math.max(
-    //       min,
-    //       parseInt(data.values[countryID][data.applyData], 10)
-    //     );
-    //     var ratio = Math.max(0, Math.min(1, (value - min) / (max - min)));
-    //     var color = this.getColor(
-    //       this.options.colorMax,
-    //       this.options.colorMin,
-    //       ratio || ratio === 0 ? ratio : 1
-    //     );
-    //     element.setAttribute('fill', color);
-    //   }.bind(this)
-    // );
-  };
-
-  // Emoji flags
-
-  svgMap.prototype.emojiFlags = {
-    AF: '🇦🇫',
-    AX: '🇦🇽',
-    AL: '🇦🇱',
-    DZ: '🇩🇿',
-    AS: '🇦🇸',
-    AD: '🇦🇩',
-    AO: '🇦🇴',
-    AI: '🇦🇮',
-    AQ: '🇦🇶',
-    AG: '🇦🇬',
-    AR: '🇦🇷',
-    AM: '🇦🇲',
-    AW: '🇦🇼',
-    AU: '🇦🇺',
-    AT: '🇦🇹',
-    AZ: '🇦🇿',
-    BS: '🇧🇸',
-    BH: '🇧🇭',
-    BD: '🇧🇩',
-    BB: '🇧🇧',
-    BY: '🇧🇾',
-    BE: '🇧🇪',
-    BZ: '🇧🇿',
-    BJ: '🇧🇯',
-    BM: '🇧🇲',
-    BT: '🇧🇹',
-    BO: '🇧🇴',
-    BA: '🇧🇦',
-    BW: '🇧🇼',
-    BR: '🇧🇷',
-    IO: '🇮🇴',
-    VG: '🇻🇬',
-    BN: '🇧🇳',
-    BG: '🇧🇬',
-    BF: '🇧🇫',
-    BI: '🇧🇮',
-    KH: '🇰🇭',
-    CM: '🇨🇲',
-    CA: '🇨🇦',
-    CV: '🇨🇻',
-    BQ: '🇧🇶',
-    KY: '🇰🇾',
-    CF: '🇨🇫',
-    TD: '🇹🇩',
-    CL: '🇨🇱',
-    CN: '🇨🇳',
-    CX: '🇨🇽',
-    CC: '🇨🇨',
-    CO: '🇨🇴',
-    KM: '🇰🇲',
-    CG: '🇨🇬',
-    CK: '🇨🇰',
-    CR: '🇨🇷',
-    HR: '🇭🇷',
-    CU: '🇨🇺',
-    CW: '🇨🇼',
-    CY: '🇨🇾',
-    CZ: '🇨🇿',
-    CD: '🇨🇩',
-    DK: '🇩🇰',
-    DJ: '🇩🇯',
-    DM: '🇩🇲',
-    DO: '🇩🇴',
-    EC: '🇪🇨',
-    EG: '🇪🇬',
-    SV: '🇸🇻',
-    GQ: '🇬🇶',
-    ER: '🇪🇷',
-    EE: '🇪🇪',
-    ET: '🇪🇹',
-    FK: '🇫🇰',
-    FO: '🇫🇴',
-    FM: '🇫🇲',
-    FJ: '🇫🇯',
-    FI: '🇫🇮',
-    FR: '🇫🇷',
-    GF: '🇬🇫',
-    PF: '🇵🇫',
-    TF: '🇹🇫',
-    GA: '🇬🇦',
-    GM: '🇬🇲',
-    GE: '🇬🇪',
-    DE: '🇩🇪',
-    GH: '🇬🇭',
-    GI: '🇬🇮',
-    GR: '🇬🇷',
-    GL: '🇬🇱',
-    GD: '🇬🇩',
-    GP: '🇬🇵',
-    GU: '🇬🇺',
-    GT: '🇬🇹',
-    GN: '🇬🇳',
-    GW: '🇬🇼',
-    GY: '🇬🇾',
-    HT: '🇭🇹',
-    HN: '🇭🇳',
-    HK: '🇭🇰',
-    HU: '🇭🇺',
-    IS: '🇮🇸',
-    IN: '🇮🇳',
-    ID: '🇮🇩',
-    IR: '🇮🇷',
-    IQ: '🇮🇶',
-    IE: '🇮🇪',
-    IM: '🇮🇲',
-    IL: '🇮🇱',
-    IT: '🇮🇹',
-    CI: '🇨🇮',
-    JM: '🇯🇲',
-    JP: '🇯🇵',
-    JE: '🇯🇪',
-    JO: '🇯🇴',
-    KZ: '🇰🇿',
-    KE: '🇰🇪',
-    KI: '🇰🇮',
-    XK: '🇽🇰',
-    KW: '🇰🇼',
-    KG: '🇰🇬',
-    LA: '🇱🇦',
-    LV: '🇱🇻',
-    LB: '🇱🇧',
-    LS: '🇱🇸',
-    LR: '🇱🇷',
-    LY: '🇱🇾',
-    LI: '🇱🇮',
-    LT: '🇱🇹',
-    LU: '🇱🇺',
-    MO: '🇲🇴',
-    MK: '🇲🇰',
-    MG: '🇲🇬',
-    MW: '🇲🇼',
-    MY: '🇲🇾',
-    MV: '🇲🇻',
-    ML: '🇲🇱',
-    MT: '🇲🇹',
-    MH: '🇲🇭',
-    MQ: '🇲🇶',
-    MR: '🇲🇷',
-    MU: '🇲🇺',
-    YT: '🇾🇹',
-    MX: '🇲🇽',
-    MD: '🇲🇩',
-    MC: '🇲🇨',
-    MN: '🇲🇳',
-    ME: '🇲🇪',
-    MS: '🇲🇸',
-    MA: '🇲🇦',
-    MZ: '🇲🇿',
-    MM: '🇲🇲',
-    NA: '🇳🇦',
-    NR: '🇳🇷',
-    NP: '🇳🇵',
-    NL: '🇳🇱',
-    NC: '🇳🇨',
-    NZ: '🇳🇿',
-    NI: '🇳🇮',
-    NE: '🇳🇪',
-    NG: '🇳🇬',
-    NU: '🇳🇺',
-    NF: '🇳🇫',
-    KP: '🇰🇵',
-    MP: '🇲🇵',
-    NO: '🇳🇴',
-    OM: '🇴🇲',
-    PK: '🇵🇰',
-    PW: '🇵🇼',
-    PS: '🇵🇸',
-    PA: '🇵🇦',
-    PG: '🇵🇬',
-    PY: '🇵🇾',
-    PE: '🇵🇪',
-    PH: '🇵🇭',
-    PN: '🇵🇳',
-    PL: '🇵🇱',
-    PT: '🇵🇹',
-    PR: '🇵🇷',
-    QA: '🇶🇦',
-    RE: '🇷🇪',
-    RO: '🇷🇴',
-    RU: '🇷🇺',
-    RW: '🇷🇼',
-    SH: '🇸🇭',
-    KN: '🇰🇳',
-    LC: '🇱🇨',
-    PM: '🇵🇲',
-    VC: '🇻🇨',
-    WS: '🇼🇸',
-    SM: '🇸🇲',
-    ST: '🇸🇹',
-    SA: '🇸🇦',
-    SN: '🇸🇳',
-    RS: '🇷🇸',
-    SC: '🇸🇨',
-    SL: '🇸🇱',
-    SG: '🇸🇬',
-    SX: '🇸🇽',
-    SK: '🇸🇰',
-    SI: '🇸🇮',
-    SB: '🇸🇧',
-    SO: '🇸🇴',
-    ZA: '🇿🇦',
-    GS: '🇬🇸',
-    KR: '🇰🇷',
-    SS: '🇸🇸',
-    ES: '🇪🇸',
-    LK: '🇱🇰',
-    SD: '🇸🇩',
-    SR: '🇸🇷',
-    SJ: '🇸🇯',
-    SZ: '🇸🇿',
-    SE: '🇸🇪',
-    CH: '🇨🇭',
-    SY: '🇸🇾',
-    TW: '🇹🇼',
-    TJ: '🇹🇯',
-    TZ: '🇹🇿',
-    TH: '🇹🇭',
-    TL: '🇹🇱',
-    TG: '🇹🇬',
-    TK: '🇹🇰',
-    TO: '🇹🇴',
-    TT: '🇹🇹',
-    TN: '🇹🇳',
-    TR: '🇹🇷',
-    TM: '🇹🇲',
-    TC: '🇹🇨',
-    TV: '🇹🇻',
-    UG: '🇺🇬',
-    UA: '🇺🇦',
-    AE: '🇦🇪',
-    GB: '🇬🇧',
-    US: '🇺🇸',
-    UM: '🇺🇲',
-    VI: '🇻🇮',
-    UY: '🇺🇾',
-    UZ: '🇺🇿',
-    VU: '🇻🇺',
-    VA: '🇻🇦',
-    VE: '🇻🇪',
-    VN: '🇻🇳',
-    WF: '🇼🇫',
-    EH: '🇪🇭',
-    YE: '🇾🇪',
-    ZM: '🇿🇲',
-    ZW: '🇿🇼'
-  };
 
   // Create the SVG map
 
@@ -750,31 +449,153 @@ function svgMapWrapper(svgPanZoom) {
           }.bind(this)
         );
 
-        // Tooltip events
-        // Add tooltip when touch is used
-        // countryElement.addEventListener(
-        //   'touchstart',
-        //   function (e) {
-        //     var countryID = countryElement.getAttribute('data-id');
-        //     var countryLink = countryElement.getAttribute('data-link');
-        //     if (this.options.touchLink) {
-        //       if (countryLink) {
-        //         window.location.href = countryLink;
-        //         return;
-        //       }
-        //     }
-        //     this.setTooltipContent(this.getTooltipContent(countryID));
-        //     this.showTooltip(e);
-        //     this.moveTooltip(e);
-        //   }.bind(this),
-        //   { passive: true }
-        // );
+        const cuountryData = (id) =>{
+          let content = `
+              <div>
+              <div class="section">
+              <div class="text-primary">                
+                <h1>Going to <span class="text-dark">${this.countries[id]}</span></h1>
+              </div>
+              <div class="row mb-4">
+                <div class="col-12 col-md-6 with-border-right">
+                  <div class="h5 font-weight-bold mb-3">Overview</div>
+                                    <ul class="list-type-custom text-body2 mb-3">
+                                            <li data-content="️✅">Open for Travel</li>
+                                      </ul>                   
+                  <div class="text-caption t-gray-color mb-3">Last reviewed on 18 May 2021, 09:40AM UTC</div>
+                </div>            
+                <div class="col-12 d-block d-md-none">
+                  <hr class="mx-n4 mb-4">
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="h5 font-weight-bold mb-3">Covid-19 Statistics</div>                  
+                  <div class="row">
+                    <div class="col-6 mb-3">
+                      <div class="text-caption font-weight-bold">NEW CASES</div>
+                      <div class="h5 font-weight-bold">848</div>
+                      <div class="text-caption">
+                            <i class="fas fa-caret-down align-middle text-primary" aria-hidden="true"></i>
+                            <span class="align-middle">-64.8% (last 7 days)</span>
+                      </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <div class="text-caption font-weight-bold">TOTAL CASES</div>
+                      <div class="h5 font-weight-bold">152,411</div>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="h5 font-weight-bold mb-2">Local Restrictions &amp; Policies</div>
+                  <div class="row align-items-center mb-3">
+                    <div class="col-auto pr-2">
+                      <i class="fas fa-info-circle t-dark-gray-blue align-middle" style="font-size: 18px;" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-auto px-0">
+                      <div class="text-caption">Hover for details</div>
+                    </div>
+                  </div>              
+                                                        <ul class="t-list-inline-condensed">
+                                                                                                                                                                                                        <li class="list-inline-item">
+                              <div class="t-chip small mb-2 warning" data-tippy-content="Recommend not to travel between regions/cities">Movement</div>
+                            </li>
+                                                                                                        <li class="list-inline-item">
+                              <div class="t-chip small mb-2 danger" data-tippy-content="Require closing (or work from home) for some sectors or categories of workers">Workplace</div>
+                            </li>
+                                                                                                                                                                                                            <li class="list-inline-item">
+                              <div class="t-chip small mb-2 danger" data-tippy-content="Require cancelling">Public events</div>
+                            </li>
+                                                                                                                                                          <li class="list-inline-item">
+                              <div class="t-chip small mb-2 alert" data-tippy-content="Open public testing (eg " drive="" through"="" testing="" available="" to="" asymptomatic="" people)"="">Testing</div>
+                            </li>
+                                                                                                        <li class="list-inline-item">
+                              <div class="t-chip small mb-2 success" data-tippy-content="No contact tracing">Contact tracing</div>
+                            </li>
+                                                                                                        <li class="list-inline-item">
+                              <div class="t-chip small mb-2 alert" data-tippy-content="Required in all shared/public spaces outside the home with other people present or all situations when social distancing not possible">Facial Coverings</div>
+                            </li>
+                                                                                                        <li class="list-inline-item">
+                              <div class="t-chip small mb-2 alert" data-tippy-content="Restrictions on gatherings of 10 people or less">Gatherings</div>
+                            </li>
+                                                                                                        <li class="list-inline-item">
+                              <div class="t-chip small mb-2 success" data-tippy-content="No availability">Vaccination</div>
+                            </li>
+                                                                                                                                              </ul>
+                                  </div>
+                                  </div></div>
+              <hr class="my-0">
+                <div class="section">
+              <div class="row">
+                <div class="col-12 col-md-10 col-lg-9">
+                  <div class="mb-5">
+                    <div class="h5 font-weight-bolder mb-1">Can you enter?</div>
+                    <p>                      
+                      Travel is not restricted by traveller type (e.g.,  PR,  Citizen,  Resident).                      
+                    </p>
+                  </div>
+                  <div class="mb-5">
+                    <div class="h5 font-weight-bolder mb-4">                      
+                      What to expect in Afghanistan?                    </div>
+                    
+                    <div class="mb-4">
+                      <p class="font-weight-bold mb-0">📝 Before your trip</p>
+                      <p>                        
+                        You will need a formal Medical Certificate presenting a negative PCR test from an accepted establishment.<br>
+Your Certificate must be within 4 days of your arrival.<br>
+                        
+                      </p>
+                    </div>
+
+                    <div class="mb-4">
+                      <p class="font-weight-bold mb-0">🛬 On Arrival</p>
+                      <p>                        
+                        On Arrival you will be required to complete a test for Covid,  with the cost borne by the traveller.                         
+                      </p>
+                    </div>
+
+                    <div class="mb-4">
+                      <p class="font-weight-bold mb-0">😷 Quarantine details</p>
+                      <p>                        
+                        General arrivals will be required to quarantine for up to N/Adays; Quarantine served at a home or at a dedicated facility (cost borne to traveller) (special arrangement may apply due to GreenLanes).                        
+                      </p>
+                    </div>
+
+                    <div class="mb-4">
+                      <p class="font-weight-bold mb-0">🛂 Travel restrictions</p>
+                      <p>                        
+                        <br>
+There are no routes that have greater restrictions at this time.                        
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="result-detail-green-lane">
+                <div class="h5 font-weight-bolder mb-3">✅ Greenlane Agreement</div>
+                                  
+                  <div class="mb-3">
+                                      <div class="font-weight-bold">There are no routes with fewer restrictions (i.e. Green Lanes) at this time.</div>
+                                                      </div>
+                                              </div>             
+                </div>
+              <div class="section pt-0">
+                <div class="text-body2 font-weight-bolder">For further information visit:</div>
+                <div class="text-break"><div class="text-body2"><a href="https://www.gov.uk/foreign-travel-advice/afghanistan/entry-requirements" target="_blank" rel="nofollow">https://www.gov.uk/foreign-travel-advice/afghanistan/entry-requirements</a></div></div>
+              </div>
+              </div>
+          `
+
+
+          return content
+        }
+
 
         countryElement.addEventListener(
           'click',
           function (e) {
             var countryID = countryElement.getAttribute('data-id');
-            this.setTooltipContent(this.getTooltipContent(countryID));
+            this.setTooltipContent(cuountryData(countryID));
             this.showTooltip(e);
           }.bind(this),
           { passive: true }
@@ -803,30 +624,8 @@ function svgMapWrapper(svgPanZoom) {
               this.options.data.values[countryID]['linkTarget']
             );
           }
-          // countryElement.addEventListener('click', function (e) {
-          //   const link = countryElement.getAttribute('data-link');
-          //   const target = countryElement.getAttribute('data-link-target');
-          //
-          //   if (target) {
-          //     window.open(link, target);
-          //   } else {
-          //     window.location.href = link;
-          //   }
-          // });
         }
 
-        // Hide tooltip when event is mouseleave or touchend
-        // ['mouseleave', 'touchend'].forEach(
-        //   function (event) {
-        //     countryElement.addEventListener(
-        //       event,
-        //       function () {
-        //         this.hideTooltip();
-        //       }.bind(this),
-        //       { passive: true }
-        //     );
-        //   }.bind(this)
-        // );
       }.bind(this)
     );
 
@@ -1691,7 +1490,7 @@ function svgMapWrapper(svgPanZoom) {
       return;
     }
     this.tooltipContent.innerHTML = '';
-    this.tooltipContent.append(content);
+    this.tooltipContent.innerHTML = (content);
   };
 
   // Show the tooltip
