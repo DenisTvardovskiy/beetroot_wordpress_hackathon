@@ -12,7 +12,6 @@
 ?>
 
 <?php wp_footer(); ?>
-<script src="<?php echo get_template_directory_uri(); ?>/assets/js/index.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/data/gdp.js"></script>
 <script>
     new svgMap({
@@ -20,5 +19,6 @@
         data: svgMapDataGPD
     });
 </script>
+<script src="<?php echo get_template_directory_uri(); ?>/assets/js/index.js"></script>
 </body>
 </html>

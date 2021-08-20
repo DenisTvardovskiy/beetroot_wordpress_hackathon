@@ -366,35 +366,35 @@ function svgMapWrapper(svgPanZoom) {
       (min = Math.max(min, data.data[data.applyData].thresholdMin));
 
     // Loop through countries and set colors
-    Object.keys(this.countries).forEach(
-      function (countryID) {
-        var element = document.getElementById(
-          this.id + '-map-country-' + countryID
-        );
-        if (!element) {
-          return;
-        }
-        if (!data.values[countryID]) {
-          element.setAttribute('fill', this.options.colorNoData);
-          return;
-        }
-        if (typeof(data.values[countryID][this.options.manualColorAttribute]) != "undefined") {
-          element.setAttribute('fill', data.values[countryID][this.options.manualColorAttribute]);
-          return;
-        }
-        var value = Math.max(
-          min,
-          parseInt(data.values[countryID][data.applyData], 10)
-        );
-        var ratio = Math.max(0, Math.min(1, (value - min) / (max - min)));
-        var color = this.getColor(
-          this.options.colorMax,
-          this.options.colorMin,
-          ratio || ratio === 0 ? ratio : 1
-        );
-        element.setAttribute('fill', color);
-      }.bind(this)
-    );
+    // Object.keys(this.countries).forEach(
+    //   function (countryID) {
+    //     var element = document.getElementById(
+    //       this.id + '-map-country-' + countryID
+    //     );
+    //     if (!element) {
+    //       return;
+    //     }
+    //     if (!data.values[countryID]) {
+    //       element.setAttribute('fill', this.options.colorNoData);
+    //       return;
+    //     }
+    //     if (typeof(data.values[countryID][this.options.manualColorAttribute]) != "undefined") {
+    //       element.setAttribute('fill', data.values[countryID][this.options.manualColorAttribute]);
+    //       return;
+    //     }
+    //     var value = Math.max(
+    //       min,
+    //       parseInt(data.values[countryID][data.applyData], 10)
+    //     );
+    //     var ratio = Math.max(0, Math.min(1, (value - min) / (max - min)));
+    //     var color = this.getColor(
+    //       this.options.colorMax,
+    //       this.options.colorMin,
+    //       ratio || ratio === 0 ? ratio : 1
+    //     );
+    //     element.setAttribute('fill', color);
+    //   }.bind(this)
+    // );
   };
 
   // Emoji flags
@@ -750,26 +750,26 @@ function svgMapWrapper(svgPanZoom) {
 
         // Tooltip events
         // Add tooltip when touch is used
-        countryElement.addEventListener(
-          'touchstart',
-          function (e) {
-            var countryID = countryElement.getAttribute('data-id');
-            var countryLink = countryElement.getAttribute('data-link');
-            if (this.options.touchLink) {
-              if (countryLink) {
-                window.location.href = countryLink;
-                return;
-              }
-            }
-            this.setTooltipContent(this.getTooltipContent(countryID));
-            this.showTooltip(e);
-            this.moveTooltip(e);
-          }.bind(this),
-          { passive: true }
-        );
+        // countryElement.addEventListener(
+        //   'touchstart',
+        //   function (e) {
+        //     var countryID = countryElement.getAttribute('data-id');
+        //     var countryLink = countryElement.getAttribute('data-link');
+        //     if (this.options.touchLink) {
+        //       if (countryLink) {
+        //         window.location.href = countryLink;
+        //         return;
+        //       }
+        //     }
+        //     this.setTooltipContent(this.getTooltipContent(countryID));
+        //     this.showTooltip(e);
+        //     this.moveTooltip(e);
+        //   }.bind(this),
+        //   { passive: true }
+        // );
 
         countryElement.addEventListener(
-          'mouseenter',
+          'click',
           function (e) {
             var countryID = countryElement.getAttribute('data-id');
             this.setTooltipContent(this.getTooltipContent(countryID));
@@ -801,30 +801,30 @@ function svgMapWrapper(svgPanZoom) {
               this.options.data.values[countryID]['linkTarget']
             );
           }
-          countryElement.addEventListener('click', function (e) {
-            const link = countryElement.getAttribute('data-link');
-            const target = countryElement.getAttribute('data-link-target');
-
-            if (target) {
-              window.open(link, target);
-            } else {
-              window.location.href = link;
-            }
-          });
+          // countryElement.addEventListener('click', function (e) {
+          //   const link = countryElement.getAttribute('data-link');
+          //   const target = countryElement.getAttribute('data-link-target');
+          //
+          //   if (target) {
+          //     window.open(link, target);
+          //   } else {
+          //     window.location.href = link;
+          //   }
+          // });
         }
 
         // Hide tooltip when event is mouseleave or touchend
-        ['mouseleave', 'touchend'].forEach(
-          function (event) {
-            countryElement.addEventListener(
-              event,
-              function () {
-                this.hideTooltip();
-              }.bind(this),
-              { passive: true }
-            );
-          }.bind(this)
-        );
+        // ['mouseleave', 'touchend'].forEach(
+        //   function (event) {
+        //     countryElement.addEventListener(
+        //       event,
+        //       function () {
+        //         this.hideTooltip();
+        //       }.bind(this),
+        //       { passive: true }
+        //     );
+        //   }.bind(this)
+        // );
       }.bind(this)
     );
 
@@ -923,6 +923,19 @@ function svgMapWrapper(svgPanZoom) {
         flagContainer.innerHTML = this.emojiFlags[countryID];
       }
     }
+
+    var closeButn = this.createElement('p',"closeBu",tooltipContentWrapper)
+    closeButn.setAttribute("id", "close")
+    closeButn.innerHTML = "X"
+
+    let CloseToolBut = document.getElementById("close")
+
+    if(CloseToolBut!==null){
+      CloseToolBut.addEventListener('click', function (e){
+        this.hideTooltip(e);
+      });
+    }
+
 
     // Title
     this.createElement(
@@ -1662,11 +1675,6 @@ function svgMapWrapper(svgPanZoom) {
       'svgMap-tooltip-content-wrapper',
       this.tooltip
     );
-    this.tooltipPointer = this.createElement(
-      'div',
-      'svgMap-tooltip-pointer',
-      this.tooltip
-    );
   };
 
   // Set the tooltips content
@@ -1692,46 +1700,11 @@ function svgMapWrapper(svgPanZoom) {
     this.tooltip.classList.remove('svgMap-active');
   };
 
-  // Move the tooltip
+  // Position the tooltip
 
   svgMap.prototype.moveTooltip = function (e) {
-    var x = e.pageX || (e.touches && e.touches[0] ? e.touches[0].pageX : null);
-    var y = e.pageY || (e.touches && e.touches[0] ? e.touches[0].pageY : null);
-
-    if (x === null || y === null) {
-      return;
-    }
-
-    var offsetToWindow = 6;
-    var offsetToPointer = 12;
-    var offsetToPointerFlipped = 32;
-
-    var wWidth = window.innerWidth;
-    var tWidth = this.tooltip.offsetWidth;
-    var tHeight = this.tooltip.offsetHeight;
-
-    // Adjust pointer when reaching window sides
-    var left = x - tWidth / 2;
-    if (left <= offsetToWindow) {
-      x = offsetToWindow + tWidth / 2;
-      this.tooltipPointer.style.marginLeft = left - offsetToWindow + 'px';
-    } else if (left + tWidth >= wWidth - offsetToWindow) {
-      x = wWidth - offsetToWindow - tWidth / 2;
-      this.tooltipPointer.style.marginLeft =
-        (wWidth - offsetToWindow - e.pageX - tWidth / 2) * -1 + 'px';
-    } else {
-      this.tooltipPointer.style.marginLeft = '0px';
-    }
-
-    // Flip tooltip when reaching top window edge
-    var top = y - offsetToPointer - tHeight;
-    if (top <= offsetToWindow) {
-      this.tooltip.classList.add('svgMap-tooltip-flipped');
-      y += offsetToPointerFlipped;
-    } else {
-      this.tooltip.classList.remove('svgMap-tooltip-flipped');
-      y -= offsetToPointer;
-    }
+    var x = 150;
+    var y = 150;
 
     this.tooltip.style.left = x + 'px';
     this.tooltip.style.top = y + 'px';
@@ -1771,7 +1744,7 @@ function svgMapWrapper(svgPanZoom) {
     return nr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator || ',');
   };
 
-  // Get a color between two other colors
+    // Get a color between two other colors
 
   svgMap.prototype.getColor = function (color1, color2, ratio) {
     color1 = color1.slice(-6);
