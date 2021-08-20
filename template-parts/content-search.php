@@ -1,14 +1,5 @@
-<?php
-/**
- * Template part for displaying results in search pages
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package jwp
- */
-
-?>
-
-<?php
-// Custom search
-?>
+<section class="search">
+    <div class="container">
+        <input type="text" placeholder="Search country info...">
+    </div>
+</section>
