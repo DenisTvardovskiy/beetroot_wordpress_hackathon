@@ -92,8 +92,7 @@ function svgMapWrapper(svgPanZoom) {
     // Create the map
     this.createMap();
 
-    // Apply map data
-    this.applyData(this.options.data);
+
   };
 
   // Countries
@@ -449,8 +448,18 @@ function svgMapWrapper(svgPanZoom) {
           }.bind(this)
         );
 
-        const cuountryData = (id) =>{
-          let content = `
+
+
+
+          async function fun(id) {
+            let content = ``
+            let mainUrl = `https://ecospace.org.ua:3000/countries/${id}`;
+            let node = null
+            node = await fetch(mainUrl)
+                .then(response => response.json())
+                .then(data => node = data );
+            console.log(node)
+            content = `
               <div>
               <div class="section">
               <div class="text-primary">                
@@ -460,9 +469,8 @@ function svgMapWrapper(svgPanZoom) {
                 <div class="col-12 col-md-6 with-border-right">
                   <div class="h5 font-weight-bold mb-3">Overview</div>
                                     <ul class="list-type-custom text-body2 mb-3">
-                                            <li data-content="️✅">Open for Travel</li>
-                                      </ul>                   
-                  <div class="text-caption t-gray-color mb-3">Last reviewed on 18 May 2021, 09:40AM UTC</div>
+                                    node.overview.map((item)=> <li>${item}</li>)
+                                      </ul>
                 </div>            
                 <div class="col-12 d-block d-md-none">
                   <hr class="mx-n4 mb-4">
@@ -472,15 +480,15 @@ function svgMapWrapper(svgPanZoom) {
                   <div class="row">
                     <div class="col-6 mb-3">
                       <div class="text-caption font-weight-bold">NEW CASES</div>
-                      <div class="h5 font-weight-bold">848</div>
+                      <div class="h5 font-weight-bold">${node.covidStatistics.newCases}</div>
                       <div class="text-caption">
                             <i class="fas fa-caret-down align-middle text-primary" aria-hidden="true"></i>
-                            <span class="align-middle">-64.8% (last 7 days)</span>
+                            <span class="align-middle">${node.covidStatistics.percent}</span>
                       </div>
                     </div>
                     <div class="col-6 mb-3">
                       <div class="text-caption font-weight-bold">TOTAL CASES</div>
-                      <div class="h5 font-weight-bold">152,411</div>
+                      <div class="h5 font-weight-bold">${node.covidStatistics.totalCases}</div>
                     </div>
                   </div>
                 </div>                
@@ -496,34 +504,18 @@ function svgMapWrapper(svgPanZoom) {
                       <div class="text-caption">Hover for details</div>
                     </div>
                   </div>              
-                                                        <ul class="t-list-inline-condensed">
-                                                                                                                                                                                                        <li class="list-inline-item">
-                              <div class="t-chip small mb-2 warning" data-tippy-content="Recommend not to travel between regions/cities">Movement</div>
-                            </li>
-                                                                                                        <li class="list-inline-item">
-                              <div class="t-chip small mb-2 danger" data-tippy-content="Require closing (or work from home) for some sectors or categories of workers">Workplace</div>
-                            </li>
-                                                                                                                                                                                                            <li class="list-inline-item">
-                              <div class="t-chip small mb-2 danger" data-tippy-content="Require cancelling">Public events</div>
-                            </li>
-                                                                                                                                                          <li class="list-inline-item">
-                              <div class="t-chip small mb-2 alert" data-tippy-content="Open public testing (eg " drive="" through"="" testing="" available="" to="" asymptomatic="" people)"="">Testing</div>
-                            </li>
-                                                                                                        <li class="list-inline-item">
-                              <div class="t-chip small mb-2 success" data-tippy-content="No contact tracing">Contact tracing</div>
-                            </li>
-                                                                                                        <li class="list-inline-item">
-                              <div class="t-chip small mb-2 alert" data-tippy-content="Required in all shared/public spaces outside the home with other people present or all situations when social distancing not possible">Facial Coverings</div>
-                            </li>
-                                                                                                        <li class="list-inline-item">
-                              <div class="t-chip small mb-2 alert" data-tippy-content="Restrictions on gatherings of 10 people or less">Gatherings</div>
-                            </li>
-                                                                                                        <li class="list-inline-item">
-                              <div class="t-chip small mb-2 success" data-tippy-content="No availability">Vaccination</div>
-                            </li>
-                                                                                                                                              </ul>
-                                  </div>
-                                  </div></div>
+                <ul class="t-list-inline-condensed">
+                    node.localRestrictionsPolicies.map((item)=>
+                    <li className="list-inline-item">
+                      <div className="t-chip small mb-2 warning"
+                           title=${item.description}>${item.title}
+                      </div>
+                    </li>
+                     )
+                </ul>
+                </div>
+                </div>
+                </div>
               <hr class="my-0">
                 <div class="section">
               <div class="row">
@@ -531,71 +523,37 @@ function svgMapWrapper(svgPanZoom) {
                   <div class="mb-5">
                     <div class="h5 font-weight-bolder mb-1">Can you enter?</div>
                     <p>                      
-                      Travel is not restricted by traveller type (e.g.,  PR,  Citizen,  Resident).                      
+                      ${node.canYouEnter}                      
                     </p>
                   </div>
                   <div class="mb-5">
-                    <div class="h5 font-weight-bolder mb-4">                      
-                      What to expect in Afghanistan?                    </div>
-                    
-                    <div class="mb-4">
-                      <p class="font-weight-bold mb-0">📝 Before your trip</p>
-                      <p>                        
-                        You will need a formal Medical Certificate presenting a negative PCR test from an accepted establishment.<br>
-Your Certificate must be within 4 days of your arrival.<br>
-                        
-                      </p>
-                    </div>
-
-                    <div class="mb-4">
-                      <p class="font-weight-bold mb-0">🛬 On Arrival</p>
-                      <p>                        
-                        On Arrival you will be required to complete a test for Covid,  with the cost borne by the traveller.                         
-                      </p>
-                    </div>
-
-                    <div class="mb-4">
-                      <p class="font-weight-bold mb-0">😷 Quarantine details</p>
-                      <p>                        
-                        General arrivals will be required to quarantine for up to N/Adays; Quarantine served at a home or at a dedicated facility (cost borne to traveller) (special arrangement may apply due to GreenLanes).                        
-                      </p>
-                    </div>
-
-                    <div class="mb-4">
-                      <p class="font-weight-bold mb-0">🛂 Travel restrictions</p>
-                      <p>                        
-                        <br>
-There are no routes that have greater restrictions at this time.                        
-                      </p>
-                    </div>
+                        <div class="h5 font-weight-bolder mb-4">                      
+                            What to expect in ${this.countries[id]}?
+                        </div>
+                        node.whatToExpectInCountry.map((item)=>
+                        <div className="mb-4">
+                          <p className="font-weight-bold mb-0">${item.title}</p>
+                          <p>${item.content}</p>
+                        </div>
+                        )
                   </div>
                 </div>
               </div>
-              <div class="result-detail-green-lane">
-                <div class="h5 font-weight-bolder mb-3">✅ Greenlane Agreement</div>
-                                  
-                  <div class="mb-3">
-                                      <div class="font-weight-bold">There are no routes with fewer restrictions (i.e. Green Lanes) at this time.</div>
-                                                      </div>
-                                              </div>             
-                </div>
               <div class="section pt-0">
                 <div class="text-body2 font-weight-bolder">For further information visit:</div>
-                <div class="text-break"><div class="text-body2"><a href="https://www.gov.uk/foreign-travel-advice/afghanistan/entry-requirements" target="_blank" rel="nofollow">https://www.gov.uk/foreign-travel-advice/afghanistan/entry-requirements</a></div></div>
+                <div class="text-break"><div class="text-body2"><a href="${node.link}" target="_blank" rel="nofollow">${node.link}</a></div></div>
               </div>
               </div>
           `
-
-
-          return content
-        }
+            return content
+          }
 
 
         countryElement.addEventListener(
           'click',
           function (e) {
             var countryID = countryElement.getAttribute('data-id');
-            this.setTooltipContent(cuountryData(countryID));
+            this.setTooltipContent(fun(countryID));
             this.showTooltip(e);
           }.bind(this),
           { passive: true }
