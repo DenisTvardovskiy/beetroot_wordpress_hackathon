@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/styles/dist/style.min.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/styles/dist/grid.min.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
 
     <link href="<?php echo get_template_directory_uri(); ?>/assets/styles/dist/svgMap.css" rel="stylesheet">
     <script src="<?php echo get_template_directory_uri(); ?>/assets/js/svgMap.js"></script>
@@ -18,3 +18,9 @@
 <body>
 
 <?php wp_body_open(); ?>
+
+<section class="header">
+    <header>
+
+    </header>
+</section>

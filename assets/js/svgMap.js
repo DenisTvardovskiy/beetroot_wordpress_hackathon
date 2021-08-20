@@ -1,5 +1,6 @@
 /*! svgMap | https://github.com/StephanWagner/svgMap | MIT License | Copyright Stephan Wagner | https://stephanwagner.me */
 // Wrapper function
+
 function svgMapWrapper(svgPanZoom) {
   var svgMap = function (options) {
     this.init(options);
@@ -942,14 +943,6 @@ function svgMapWrapper(svgPanZoom) {
       }
     }
 
-
-    let newBody = `
-        <div>
-            Loh
-        </div>
-    `;
-
-
     // Title
     this.createElement(
       'div',
@@ -1704,6 +1697,7 @@ function svgMapWrapper(svgPanZoom) {
 
   svgMap.prototype.showTooltip = function (e) {
     this.tooltip.classList.add('svgMap-active');
+    darkBg.classList.add("show");
     this.moveTooltip(e);
   };
 

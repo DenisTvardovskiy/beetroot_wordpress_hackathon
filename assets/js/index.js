@@ -1,7 +1,9 @@
-console.log('Hello world!');
-
+let darkBg = document.getElementById('darkBg');
 let allCountries = document.getElementsByClassName('svgMap-country');
+
 for(let i = 0; i < allCountries.length; i++){
+    console.log(allCountries[i].getAttribute('data-id'));
+
     if(i % 2 === 0){
         allCountries[i].setAttribute("fill", "red");
     }
