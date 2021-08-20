@@ -22,8 +22,108 @@ section.map{
   width: 100%;
   height: auto;
   display: block;
-  border:1px solid red;
   overflow: hidden;
+
+  & .section{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    &:nth-child(2){
+      border:1px solid red;
+
+      & .row{
+        width:100%;
+      }
+    }
+    .row{
+      width:100%;
+
+    }
+    & .text-primary{
+      width: 100%;
+    }
+    & h1{
+      color: @green-color;
+      font-size: 2rem;
+
+      & span{
+        font-weight: 700;
+        color: @dark-color;
+      }
+    }
+
+    & .h5.font-weight-bold.mb-3,
+    .h5.font-weight-bold.mb-2{
+      width: 100%;
+      font-family: @secondary-font;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .col-12.col-md-6.with-border-right{
+      width:100%;
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+
+      & ul.list-type-custom.text-body2.mb-3 {
+        margin-right: 20px;
+      }
+      & .row, .row.mb-4{
+        width: 50%;
+      }
+    }
+
+    & .col-6.mb-3{
+      width:100%;
+      display: flex;
+    }
+
+
+    & .col-12.col-md-10.col-lg-9{
+      width:100%;
+      margin: 20px 0;
+
+      & .h5.font-weight-bolder.mb-1{
+        font-size: 1.5rem;
+        text-transform: uppercase;
+      }
+    }
+  }
+  & .col-12.col-md-6{
+    margin-top:25px;
+  }
+  & .mx-n4.mb-4{
+    display: none;
+  }
+  & .t-list-inline-condensed{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    & li{
+      min-width: 100px;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      border:2px solid @orange-color;
+      margin: 10px;
+    }
+  }
+  .row.align-items-center.mb-3{
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+  }
+  .mb-5{
+    width:100%;
+  }
+  .mb-4{
+    margin: 15px 0;
+  }
 }
 
 @media screen and (max-width: 992px) {
