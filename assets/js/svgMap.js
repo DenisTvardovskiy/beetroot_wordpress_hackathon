@@ -453,23 +453,24 @@ function svgMapWrapper(svgPanZoom) {
 
           async function fun(id) {
             let content = ``
-            let mainUrl = `https://ecospace.org.ua:3000/countries/${id}`;
+            let loot = document.getElementsByClassName("svgMap-tooltip-content-wrapper").item(0)
+            loot.innerHTML = content;
+            let mainUrl = `https://ecospace.org.ua:3055/country/${id}`;
             let node = null
             node = await fetch(mainUrl)
                 .then(response => response.json())
                 .then(data => node = data );
             console.log(node)
             content = `
-              <div>
-              <div class="section">
+              <div class="container"></div>
               <div class="text-primary">                
-                <h1>Going to <span class="text-dark">${this.countries[id]}</span></h1>
+                <h1>Going to <span class="text-dark">${node.country}</span></h1>
               </div>
               <div class="row mb-4">
                 <div class="col-12 col-md-6 with-border-right">
                   <div class="h5 font-weight-bold mb-3">Overview</div>
                                     <ul class="list-type-custom text-body2 mb-3">
-                                    node.overview.map((item)=> <li>${item}</li>)
+                                    ${node.overview.map((item) => `<li>${item}</li>`)}
                                       </ul>
                 </div>            
                 <div class="col-12 d-block d-md-none">
@@ -479,7 +480,7 @@ function svgMapWrapper(svgPanZoom) {
                   <div class="h5 font-weight-bold mb-3">Covid-19 Statistics</div>                  
                   <div class="row">
                     <div class="col-6 mb-3">
-                      <div class="text-caption font-weight-bold">NEW CASES</div>
+                      <div class="text-caption font-weight-bold">NEW CASES: </div><br>
                       <div class="h5 font-weight-bold">${node.covidStatistics.newCases}</div>
                       <div class="text-caption">
                             <i class="fas fa-caret-down align-middle text-primary" aria-hidden="true"></i>
@@ -487,7 +488,7 @@ function svgMapWrapper(svgPanZoom) {
                       </div>
                     </div>
                     <div class="col-6 mb-3">
-                      <div class="text-caption font-weight-bold">TOTAL CASES</div>
+                      <div class="text-caption font-weight-bold">TOTAL CASES: </div><br>
                       <div class="h5 font-weight-bold">${node.covidStatistics.totalCases}</div>
                     </div>
                   </div>
@@ -495,23 +496,15 @@ function svgMapWrapper(svgPanZoom) {
               </div>
               <div class="row">
                 <div class="col-12">
-                  <div class="h5 font-weight-bold mb-2">Local Restrictions &amp; Policies</div>
-                  <div class="row align-items-center mb-3">
-                    <div class="col-auto pr-2">
-                      <i class="fas fa-info-circle t-dark-gray-blue align-middle" style="font-size: 18px;" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-auto px-0">
-                      <div class="text-caption">Hover for details</div>
-                    </div>
-                  </div>              
+                  <div class="h5 font-weight-bold mb-2">Local Restrictions &amp; Policies</div>           
                 <ul class="t-list-inline-condensed">
-                    node.localRestrictionsPolicies.map((item)=>
-                    <li className="list-inline-item">
+                    ${node.localRestrictionsPolicies.map((item)=>
+                    `<li className="list-inline-item">
                       <div className="t-chip small mb-2 warning"
-                           title=${item.description}>${item.title}
+                           >${item.title}
                       </div>
-                    </li>
-                     )
+                    </li>`
+                     )}
                 </ul>
                 </div>
                 </div>
@@ -528,14 +521,14 @@ function svgMapWrapper(svgPanZoom) {
                   </div>
                   <div class="mb-5">
                         <div class="h5 font-weight-bolder mb-4">                      
-                            What to expect in ${this.countries[id]}?
+                            What to expect in ${node.country}?
                         </div>
-                        node.whatToExpectInCountry.map((item)=>
-                        <div className="mb-4">
+                        ${node.whatToExpectInCountry.map((item)=>
+                        `<div className="mb-4">
                           <p className="font-weight-bold mb-0">${item.title}</p>
                           <p>${item.content}</p>
-                        </div>
-                        )
+                        </div>`
+                        )}
                   </div>
                 </div>
               </div>
@@ -543,17 +536,19 @@ function svgMapWrapper(svgPanZoom) {
                 <div class="text-body2 font-weight-bolder">For further information visit:</div>
                 <div class="text-break"><div class="text-body2"><a href="${node.link}" target="_blank" rel="nofollow">${node.link}</a></div></div>
               </div>
-              </div>
           `
-            return content
+
+            loot.innerHTML = (content);
+            return node
           }
 
 
         countryElement.addEventListener(
           'click',
-          function (e) {
+          async function (e) {
             var countryID = countryElement.getAttribute('data-id');
             this.setTooltipContent(fun(countryID));
+            await fun(countryID)
             this.showTooltip(e);
           }.bind(this),
           { passive: true }
