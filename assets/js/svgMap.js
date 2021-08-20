@@ -733,6 +733,7 @@ function svgMapWrapper(svgPanZoom) {
           this.id + '-map-country-' + countryID
         );
         countryElement.setAttribute('data-id', countryID);
+        countryElement.setAttribute('data-name', svgMap.prototype.countries[countryID]);
         countryElement.classList.add('svgMap-country');
 
         this.mapImage.appendChild(countryElement);
