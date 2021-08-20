@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/styles/dist/style.min.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/styles/dist/grid.min.css">
 
-        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
 
     <link href="<?php echo get_template_directory_uri(); ?>/assets/styles/dist/svgMap.css" rel="stylesheet">
     <script src="<?php echo get_template_directory_uri(); ?>/assets/js/svgMap.js"></script>
@@ -21,6 +21,22 @@
 
 <section class="header">
     <header>
-
+        <nav class="navigation">
+            <div class="container desktop" id="search">
+                <input type="text" placeholder="Search country info...">
+                <div onclick="toggleClose()">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="container mobile">
+                <div class="menu-el">
+                    <i class="fas fa-th"></i>
+                </div>
+                <div class="menu-el"><span>covid map</span></div>
+                <div class="menu-el" onclick="toggleClose()">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </nav>
     </header>
 </section>

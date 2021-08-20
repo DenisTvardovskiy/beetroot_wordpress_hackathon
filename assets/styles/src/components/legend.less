@@ -1,6 +1,6 @@
 @import "../abstracts/_global.less";
 
-section.stats{
+section.map-legend{
   width: 200px;
   height: 300px;
   position: absolute;
@@ -15,5 +15,16 @@ section.stats{
     width: 100%;
     box-sizing: border-box;
     padding: 15px;
+  }
+
+  &.mobile{
+    display: none;
+  }
+}
+@media screen and (max-width: 992px) {
+  section.map-legend{
+    &.desktop{
+      display: none;
+    }
   }
 }

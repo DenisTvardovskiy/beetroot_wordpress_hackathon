@@ -1705,6 +1705,7 @@ function svgMapWrapper(svgPanZoom) {
 
   svgMap.prototype.hideTooltip = function () {
     this.tooltip.classList.remove('svgMap-active');
+    darkBg.classList.remove("show");
   };
 
   // Position the tooltip

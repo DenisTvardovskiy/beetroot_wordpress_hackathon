@@ -116,13 +116,13 @@
   bottom: 0!important;
   right: 0!important;
   margin: auto;
-  border-radius: 2px;
   background: #fff;
   padding: 25px;
   overflow-y: auto;
   display: none;
   width:65%;
   height: 65vh;
+  border-radius: 25px;
 }
 
 .svgMap-tooltip.svgMap-tooltip-flipped {
