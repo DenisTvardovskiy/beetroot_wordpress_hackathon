@@ -533,7 +533,13 @@ function svgMapWrapper(svgPanZoom) {
             `
 
             loot.innerHTML = (content);
-
+            
+            let closePopup = document.getElementById('hide-info');
+            let popup = document.querySelector('.svgMap-tooltip');
+            closePopup.addEventListener('click', _=>{
+              popup.classList.remove('svgMap-active');
+              darkBg.classList.remove('show');
+            })
             return node
           }
 
