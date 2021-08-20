@@ -2,7 +2,7 @@
 
 section.map-legend{
   width: 200px;
-  height: 300px;
+  min-height: 150px;
   position: absolute;
   left: 35px;
   bottom: 35px;
@@ -15,6 +15,37 @@ section.map-legend{
     width: 100%;
     box-sizing: border-box;
     padding: 15px;
+
+    & ul.legend-list{
+      width:100%;
+      height: auto;
+
+      & li{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 15px 0;
+
+        & .circle{
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+
+          &.green{
+            background-color: @green-color;
+          }
+
+          &.orange{
+            background-color: @orange-color;
+          }
+
+          &.red{
+            background-color: @red-color;
+          }
+        }
+      }
+    }
+
   }
 
   &.mobile{

@@ -44,6 +44,14 @@ section.header {
             }
           }
         }
+
+        &.desktop{
+
+          & div{
+            display: none;
+          }
+        }
+
         .default-border-radius;
 
         & input[type='text']{
@@ -84,17 +92,21 @@ section.header {
             left:0;
             margin: auto;
 
+            &.desktop{
+
+              & div{
+                width: 20%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
+
             &.show {
               top: 0;
             }
             & input{
               width: 80%;
-            }
-            & #close-search{
-              width: 20%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
             }
           }
 
