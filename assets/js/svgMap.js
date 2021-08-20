@@ -491,7 +491,7 @@ function svgMapWrapper(svgPanZoom) {
                             <div class="percent-value">
                                 <div class="text-caption">
                                     <i class="fas fa-caret-down"></i>
-                                    <p>-${node.covidStatistics.percent*7}(last 7 days)</p>
+                                    <p>${(node.covidStatistics.percent*7).toFixed(2)}% (last 7 days)</p>
                                 </div>
                             </div>
                         </div>
@@ -526,7 +526,7 @@ function svgMapWrapper(svgPanZoom) {
                 </div>
             
                 <div class="more-info">
-                    <p>For further information visit:</p>
+                    <h6>For further information visit:</h6>
                     <a href="${node.link}" target="_blank" rel="nofollow">${node.link}</a>
                 </div>
             </div>
