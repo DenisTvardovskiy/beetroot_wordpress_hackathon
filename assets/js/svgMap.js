@@ -45,7 +45,7 @@ function svgMapWrapper(svgPanZoom) {
 
       // The URL to the flags when using flag type 'image', {0} will get replaced with the lowercase country id
       flagURL:
-        'https://cdn.jsdelivr.net/gh/hjnilsson/country-flags@latest/svg/{0}.svg',
+          'https://cdn.jsdelivr.net/gh/hjnilsson/country-flags@latest/svg/{0}.svg',
 
       // Decide whether to show the flag option or not
       hideFlag: false,
@@ -72,8 +72,8 @@ function svgMapWrapper(svgPanZoom) {
 
     // Abort if target element not found
     if (
-      !this.options.targetElementID ||
-      !document.getElementById(this.options.targetElementID)
+        !this.options.targetElementID ||
+        !document.getElementById(this.options.targetElementID)
     ) {
       this.error('Target element not found');
     }
@@ -354,13 +354,13 @@ function svgMapWrapper(svgPanZoom) {
 
     // Create map wrappers
     this.mapWrapper = this.createElement(
-      'div',
-      'svgMap-map-wrapper',
-      this.wrapper
+        'div',
+        'svgMap-map-wrapper',
+        this.wrapper
     );
     this.mapImage = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'svg'
+        'http://www.w3.org/2000/svg',
+        'svg'
     );
     this.mapImage.setAttribute('viewBox', '0 0 2000 1001');
     this.mapImage.classList.add('svgMap-map-image');
@@ -368,35 +368,35 @@ function svgMapWrapper(svgPanZoom) {
 
     // Add controls
     var mapControlsWrapper = this.createElement(
-      'div',
-      'svgMap-map-controls-wrapper',
-      this.mapWrapper
+        'div',
+        'svgMap-map-controls-wrapper',
+        this.mapWrapper
     );
     var zoomContainer = this.createElement(
-      'div',
-      'svgMap-map-controls-zoom',
-      mapControlsWrapper
+        'div',
+        'svgMap-map-controls-zoom',
+        mapControlsWrapper
     );
     ['in', 'out'].forEach(
-      function (item) {
-        var zoomControlName =
-          'zoomControl' + item.charAt(0).toUpperCase() + item.slice(1);
-        this[zoomControlName] = this.createElement(
-          'button',
-          'svgMap-control-button svgMap-zoom-button svgMap-zoom-' +
-            item +
-            '-button',
-          zoomContainer
-        );
-        this[zoomControlName].type = 'button';
-        this[zoomControlName].addEventListener(
-          'click',
-          function () {
-            this.zoomMap(item);
-          }.bind(this),
-          { passive: true }
-        );
-      }.bind(this)
+        function (item) {
+          var zoomControlName =
+              'zoomControl' + item.charAt(0).toUpperCase() + item.slice(1);
+          this[zoomControlName] = this.createElement(
+              'button',
+              'svgMap-control-button svgMap-zoom-button svgMap-zoom-' +
+              item +
+              '-button',
+              zoomContainer
+          );
+          this[zoomControlName].type = 'button';
+          this[zoomControlName].addEventListener(
+              'click',
+              function () {
+                this.zoomMap(item);
+              }.bind(this),
+              { passive: true }
+          );
+        }.bind(this)
     );
 
     // Add accessible names to zoom controls
@@ -414,41 +414,39 @@ function svgMapWrapper(svgPanZoom) {
 
     // Add map elements
     Object.keys(mapPaths).forEach(
-      function (countryID) {
-        var countryData = this.mapPaths[countryID];
-        if (!countryData.d) {
-          return;
-        }
+        function (countryID) {
+          var countryData = this.mapPaths[countryID];
+          if (!countryData.d) {
+            return;
+          }
 
-        var countryElement = document.createElementNS(
-          'http://www.w3.org/2000/svg',
-          'path'
-        );
+          var countryElement = document.createElementNS(
+              'http://www.w3.org/2000/svg',
+              'path'
+          );
 
-        countryElement.setAttribute('d', countryData.d);
-        countryElement.setAttribute(
-          'id',
-          this.id + '-map-country-' + countryID
-        );
-        countryElement.setAttribute('data-id', countryID);
-        countryElement.setAttribute('data-name', svgMap.prototype.countries[countryID]);
-        countryElement.classList.add('svgMap-country');
+          countryElement.setAttribute('d', countryData.d);
+          countryElement.setAttribute(
+              'id',
+              this.id + '-map-country-' + countryID
+          );
+          countryElement.setAttribute('data-id', countryID);
+          countryElement.setAttribute('data-name', svgMap.prototype.countries[countryID]);
+          countryElement.classList.add('svgMap-country');
 
-        this.mapImage.appendChild(countryElement);
+          this.mapImage.appendChild(countryElement);
 
-        ['mouseenter', 'touchdown'].forEach(
-          function (event) {
-            countryElement.addEventListener(
-              event,
-              function () {
-                countryElement.closest('g').appendChild(countryElement);
-              }.bind(this),
-              { passive: true }
-            );
-          }.bind(this)
-        );
-
-
+          ['mouseenter', 'touchdown'].forEach(
+              function (event) {
+                countryElement.addEventListener(
+                    event,
+                    function () {
+                      countryElement.closest('g').appendChild(countryElement);
+                    }.bind(this),
+                    { passive: true }
+                );
+              }.bind(this)
+          );
 
 
           async function fun(id) {
@@ -460,126 +458,123 @@ function svgMapWrapper(svgPanZoom) {
             node = await fetch(mainUrl)
                 .then(response => response.json())
                 .then(data => node = data );
-            console.log(node)
+            // console.log(node)
             content = `
-              <div class="container"></div>
-              <div class="text-primary">                
-                <h1>Going to <span class="text-dark">${node.country}</span></h1>
-              </div>
-              <div class="row mb-4">
-                <div class="col-12 col-md-6 with-border-right">
-                  <div class="h5 font-weight-bold mb-3">Overview</div>
-                                    <ul class="list-type-custom text-body2 mb-3">
-                                    ${node.overview.map((item) => `<li>${item}</li>`)}
-                                      </ul>
-                </div>            
-                <div class="col-12 d-block d-md-none">
-                  <hr class="mx-n4 mb-4">
-                </div>
-                <div class="col-12 col-md-6">
-                  <div class="h5 font-weight-bold mb-3">Covid-19 Statistics</div>                  
-                  <div class="row">
-                    <div class="col-6 mb-3">
-                      <div class="text-caption font-weight-bold">NEW CASES: </div><br>
-                      <div class="h5 font-weight-bold">${node.covidStatistics.newCases}</div>
-                      <div class="text-caption">
-                            <i class="fas fa-caret-down align-middle text-primary" aria-hidden="true"></i>
-                            <span class="align-middle">${node.covidStatistics.percent}</span>
-                      </div>
+            <div class="container">
+                <div class="message-heading">
+                    <div>
+                        <h3>Going to</h3>
+                        <h3 class="text-dark">${node.country}</h3>
                     </div>
-                    <div class="col-6 mb-3">
-                      <div class="text-caption font-weight-bold">TOTAL CASES: </div><br>
-                      <div class="h5 font-weight-bold">${node.covidStatistics.totalCases}</div>
+                    <div id="hide-info">
+                        <p>close</p>
                     </div>
-                  </div>
-                </div>                
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <div class="h5 font-weight-bold mb-2">Local Restrictions &amp; Policies</div>           
-                <ul class="t-list-inline-condensed">
-                    ${node.localRestrictionsPolicies.map((item)=>
-                    `<li className="list-inline-item">
-                      <div className="t-chip small mb-2 warning"
-                           >${item.title}
-                      </div>
-                    </li>`
-                     )}
-                </ul>
                 </div>
-                </div>
-                </div>
-              <hr class="my-0">
-                <div class="section">
-              <div class="row">
-                <div class="col-12 col-md-10 col-lg-9">
-                  <div class="mb-5">
-                    <div class="h5 font-weight-bolder mb-1">Can you enter?</div>
-                    <p>                      
-                      ${node.canYouEnter}                      
-                    </p>
-                  </div>
-                  <div class="mb-5">
-                        <div class="h5 font-weight-bolder mb-4">                      
-                            What to expect in ${node.country}?
+                <div class="overview two-per-row-no-margin">
+                    <div class="grid-el">
+                        <h5>Overview</h5>
+                        <ul>
+                            ${node.overview.map((item) => `<li>${item}</li>`).join(' ')}
+                        </ul>
+                    </div>
+                    <div class="grid-el">
+                        <h5>Covid-19 Statistics</h5>
+                        <div class="two-per-row-no-margin">
+                            <div class="grid-el">
+                                <h6>NEW CASES:</h6>
+                                <h5>${node.covidStatistics.newCases}</h5>
+                            </div>
+                            <div class="grid-el">
+                                <h6>TOTAL CASES:</h6>
+                                <h5>${node.covidStatistics.totalCases}</h5>
+                            </div>
+                            <div class="percent-value">
+                                <div class="text-caption">
+                                    <i class="fas fa-caret-down"></i>
+                                    <p>-${node.covidStatistics.percent*7}(last 7 days)</p>
+                                </div>
+                            </div>
                         </div>
-                        ${node.whatToExpectInCountry.map((item)=>
-                        `<div className="mb-4">
-                          <p className="font-weight-bold mb-0">${item.title}</p>
-                          <p>${item.content}</p>
-                        </div>`
-                        )}
-                  </div>
+                    </div>
+            
                 </div>
-              </div>
-              <div class="section pt-0">
-                <div class="text-body2 font-weight-bolder">For further information visit:</div>
-                <div class="text-break"><div class="text-body2"><a href="${node.link}" target="_blank" rel="nofollow">${node.link}</a></div></div>
-              </div>
-          `
+            
+                <div class="content-list">
+                    <h5>Local Restrictions &amp; Policies</h5>
+                    <ul class="polices-list">
+                        ${node.localRestrictionsPolicies.map((item)=>
+                            `<li>${item.title}</li>`
+                        ).join(' ')}
+                    </ul>
+                </div>
+            
+                <div class="enter">
+                    <h5>Can you enter?</h5>
+                    <p>${node.canYouEnter}</p>
+                </div>
+            
+                <div class="enter-element">
+                    <h5>What to expect in ${node.country}?</h5>
+                    ${node.whatToExpectInCountry.map((item)=>
+                    `
+                        <div>
+                          <h6>${item.title}</h6>
+                          <p>${item.content}</p>
+                      </div>
+                    `
+                        ).join(' ')}
+                </div>
+            
+                <div class="more-info">
+                    <p>For further information visit:</p>
+                    <a href="${node.link}" target="_blank" rel="nofollow">${node.link}</a>
+                </div>
+            </div>
+            `
 
             loot.innerHTML = (content);
+
             return node
           }
 
 
-        countryElement.addEventListener(
-          'click',
-          async function (e) {
-            var countryID = countryElement.getAttribute('data-id');
-            this.setTooltipContent(fun(countryID));
-            await fun(countryID)
-            this.showTooltip(e);
-          }.bind(this),
-          { passive: true }
-        );
-
-        countryElement.addEventListener(
-          'mousemove',
-          function (e) {
-            this.moveTooltip(e);
-          }.bind(this),
-          { passive: true }
-        );
-
-        if (
-          this.options.data.values &&
-          this.options.data.values[countryID] &&
-          this.options.data.values[countryID]['link']
-        ) {
-          countryElement.setAttribute(
-            'data-link',
-            this.options.data.values[countryID]['link']
+          countryElement.addEventListener(
+              'click',
+              async function (e) {
+                var countryID = countryElement.getAttribute('data-id');
+                this.setTooltipContent(fun(countryID));
+                await fun(countryID)
+                this.showTooltip(e);
+              }.bind(this),
+              { passive: true }
           );
-          if (this.options.data.values[countryID]['linkTarget']) {
-            countryElement.setAttribute(
-              'data-link-target',
-              this.options.data.values[countryID]['linkTarget']
-            );
-          }
-        }
 
-      }.bind(this)
+          countryElement.addEventListener(
+              'mousemove',
+              function (e) {
+                this.moveTooltip(e);
+              }.bind(this),
+              { passive: true }
+          );
+
+          if (
+              this.options.data.values &&
+              this.options.data.values[countryID] &&
+              this.options.data.values[countryID]['link']
+          ) {
+            countryElement.setAttribute(
+                'data-link',
+                this.options.data.values[countryID]['link']
+            );
+            if (this.options.data.values[countryID]['linkTarget']) {
+              countryElement.setAttribute(
+                  'data-link-target',
+                  this.options.data.values[countryID]['linkTarget']
+              );
+            }
+          }
+
+        }.bind(this)
     );
 
     // Expose instance
@@ -603,15 +598,15 @@ function svgMapWrapper(svgPanZoom) {
         var gutterHeight = me.mapWrapper.offsetHeight * 0.85;
         var sizes = this.getSizes();
         var leftLimit =
-          -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) +
-          gutterWidth;
+            -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) +
+            gutterWidth;
         var rightLimit =
-          sizes.width - gutterWidth - sizes.viewBox.x * sizes.realZoom;
+            sizes.width - gutterWidth - sizes.viewBox.x * sizes.realZoom;
         var topLimit =
-          -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) +
-          gutterHeight;
+            -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) +
+            gutterHeight;
         var bottomLimit =
-          sizes.height - gutterHeight - sizes.viewBox.y * sizes.realZoom;
+            sizes.height - gutterHeight - sizes.viewBox.y * sizes.realZoom;
         return {
           x: Math.max(leftLimit, Math.min(rightLimit, newPan.x)),
           y: Math.max(topLimit, Math.min(bottomLimit, newPan.y))
@@ -635,14 +630,27 @@ function svgMapWrapper(svgPanZoom) {
   };
 
   // Create the tooltip content
+  setTimeout(()=>{
+    let CloseToolBut = document.getElementById("close-info")
+    if(CloseToolBut!==null){
+      console.log(CloseToolBut)
+      CloseToolBut.addEventListener('click',
+          function (e) {
+            console.log(CloseToolBut)
+            this.hideTooltip(e);
+          }.bind(this),
+          { passive: true }
+      );
+    }
+  },0)
 
   svgMap.prototype.getTooltipContent = function (countryID) {
     // Custom tooltip
     if (this.options.onGetTooltip) {
       var customDiv = this.options.onGetTooltip(
-        this.tooltip,
-        countryID,
-        this.options.data.values[countryID]
+          this.tooltip,
+          countryID,
+          this.options.data.values[countryID]
       );
 
       if (customDiv) {
@@ -651,89 +659,20 @@ function svgMapWrapper(svgPanZoom) {
     }
 
     var tooltipContentWrapper = this.createElement(
-      'div',
-      'svgMap-tooltip-content-container'
+        'div',
+        'svgMap-tooltip-content-container'
     );
 
-    this.createElement(
-        'button',
-        "close",
-        tooltipContentWrapper
-    ).innerHTML = "X"
-    setTimeout(()=>{
-      let CloseToolBut = document.getElementsByClassName("close").item(0)
-      if(CloseToolBut!==null){
-        CloseToolBut.addEventListener('click',
-            function (e) {
-              this.hideTooltip(e);
-            }.bind(this),
-            { passive: true }
-        );
-      }
-    },0)
 
 
-    if (this.options.hideFlag === false) {
-      // Flag
-      var flagContainer = this.createElement(
-        'div',
-        'svgMap-tooltip-flag-container svgMap-tooltip-flag-container-' +
-          this.options.flagType,
-        tooltipContentWrapper
-      );
-
-      if (this.options.flagType === 'image') {
-        this.createElement(
-          'img',
-          'svgMap-tooltip-flag',
-          flagContainer
-        ).setAttribute(
-          'src',
-          this.options.flagURL.replace('{0}', countryID.toLowerCase())
-        );
-      } else if (this.options.flagType === 'emoji') {
-        flagContainer.innerHTML = this.emojiFlags[countryID];
-      }
-    }
-
-    // Title
-    this.createElement(
-      'div',
-      'svgMap-tooltip-title',
-      tooltipContentWrapper
-    ).innerHTML = this.getCountryName(countryID);
 
     // Content
     var tooltipContent = this.createElement(
-      'div',
-      'svgMap-tooltip-content',
-      tooltipContentWrapper
-    );
-    if (!this.options.data.values[countryID]) {
-      this.createElement(
         'div',
-        'svgMap-tooltip-no-data',
-        tooltipContent
-      ).innerHTML = this.options.noDataText;
-    } else {
-      var tooltipContentTable = '<table>';
-      Object.keys(this.options.data.data).forEach(
-        function (key) {
-          var item = this.options.data.data[key];
-          var value = this.options.data.values[countryID][key];
-          item.floatingNumbers && (value = value.toFixed(1));
-          item.thousandSeparator &&
-            (value = this.numberWithCommas(value, item.thousandSeparator));
-          value = item.format
-            ? item.format.replace('{0}', '<span>' + value + '</span>')
-            : '<span>' + value + '</span>';
-          tooltipContentTable +=
-            '<tr><td>' + (item.name || '') + '</td><td>' + value + '</td></tr>';
-        }.bind(this)
-      );
-      tooltipContentTable += '</table>';
-      tooltipContent.innerHTML = tooltipContentTable;
-    }
+        'svgMap-tooltip-content',
+        tooltipContentWrapper
+    );
+
     return tooltipContentWrapper;
   };
 
@@ -759,9 +698,9 @@ function svgMapWrapper(svgPanZoom) {
 
   svgMap.prototype.zoomMap = function (direction) {
     if (
-      this[
+        this[
         'zoomControl' + direction.charAt(0).toUpperCase() + direction.slice(1)
-      ].classList.contains('svgMap-disabled')
+            ].classList.contains('svgMap-disabled')
     ) {
       return false;
     }
@@ -1425,14 +1364,14 @@ function svgMapWrapper(svgPanZoom) {
       return false;
     }
     this.tooltip = this.createElement(
-      'div',
-      'svgMap-tooltip',
-      document.getElementsByTagName('body')[0]
+        'div',
+        'svgMap-tooltip',
+        document.getElementsByTagName('body')[0]
     );
     this.tooltipContent = this.createElement(
-      'div',
-      'svgMap-tooltip-content-wrapper',
-      this.tooltip
+        'div',
+        'svgMap-tooltip-content-wrapper',
+        this.tooltip
     );
   };
 
@@ -1475,17 +1414,17 @@ function svgMapWrapper(svgPanZoom) {
 
   svgMap.prototype.error = function (error) {
     (console.error || console.log)(
-      'svgMap error: ' + (error || 'Unknown error')
+        'svgMap error: ' + (error || 'Unknown error')
     );
   };
 
   // Helper to create an element with a class name
 
   svgMap.prototype.createElement = function (
-    type,
-    className,
-    appendTo,
-    innerhtml
+      type,
+      className,
+      appendTo,
+      innerhtml
   ) {
     var element = document.createElement(type);
     if (className) {
@@ -1505,22 +1444,22 @@ function svgMapWrapper(svgPanZoom) {
     return nr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator || ',');
   };
 
-    // Get a color between two other colors
+  // Get a color between two other colors
 
   svgMap.prototype.getColor = function (color1, color2, ratio) {
     color1 = color1.slice(-6);
     color2 = color2.slice(-6);
     ratio = parseFloat(ratio).toFixed(1);
     var r = Math.ceil(
-      parseInt(color1.substring(0, 2), 16) * ratio +
+        parseInt(color1.substring(0, 2), 16) * ratio +
         parseInt(color2.substring(0, 2), 16) * (1 - ratio)
     );
     var g = Math.ceil(
-      parseInt(color1.substring(2, 4), 16) * ratio +
+        parseInt(color1.substring(2, 4), 16) * ratio +
         parseInt(color2.substring(2, 4), 16) * (1 - ratio)
     );
     var b = Math.ceil(
-      parseInt(color1.substring(4, 6), 16) * ratio +
+        parseInt(color1.substring(4, 6), 16) * ratio +
         parseInt(color2.substring(4, 6), 16) * (1 - ratio)
     );
     return '#' + this.getHex(r) + this.getHex(g) + this.getHex(b);
@@ -1537,8 +1476,8 @@ function svgMapWrapper(svgPanZoom) {
 
   svgMap.prototype.getCountryName = function (countryID) {
     return this.options.countryNames && this.options.countryNames[countryID]
-      ? this.options.countryNames[countryID]
-      : this.countries[countryID];
+        ? this.options.countryNames[countryID]
+        : this.countries[countryID];
   };
 
   return svgMap;
