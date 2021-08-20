@@ -901,6 +901,24 @@ function svgMapWrapper(svgPanZoom) {
       'svgMap-tooltip-content-container'
     );
 
+    this.createElement(
+        'button',
+        "close",
+        tooltipContentWrapper
+    ).innerHTML = "X"
+    setTimeout(()=>{
+      let CloseToolBut = document.getElementsByClassName("close").item(0)
+      if(CloseToolBut!==null){
+        CloseToolBut.addEventListener('click',
+            function (e) {
+              this.hideTooltip(e);
+            }.bind(this),
+            { passive: true }
+        );
+      }
+    },0)
+
+
     if (this.options.hideFlag === false) {
       // Flag
       var flagContainer = this.createElement(
@@ -924,17 +942,12 @@ function svgMapWrapper(svgPanZoom) {
       }
     }
 
-    var closeButn = this.createElement('p',"closeBu",tooltipContentWrapper)
-    closeButn.setAttribute("id", "close")
-    closeButn.innerHTML = "X"
 
-    let CloseToolBut = document.getElementById("close")
-
-    if(CloseToolBut!==null){
-      CloseToolBut.addEventListener('click', function (e){
-        this.hideTooltip(e);
-      });
-    }
+    let newBody = `
+        <div>
+            Loh
+        </div>
+    `;
 
 
     // Title
