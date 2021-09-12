@@ -1,0 +1,9 @@
+@import '../../theme/theme-variables';
+
+.test{
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  background-color: $dark-color;
+  color: $white-color;
+}
